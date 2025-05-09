@@ -1,0 +1,65 @@
+name: Render STL files
+
+on:
+  push:
+    branches: [ "main" ]
+    paths: [ "Enclosure" ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    
+    runs-on: ubuntu-latest
+    
+    steps:
+    
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Render STL in Docker
+        uses: vikulin/openscad-build-action@main
+        with:
+          input-file: Enclosure/bdg4-01.scad
+          output-file: build/bdg4-01.stl
+          
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ogk-enclosure-${{ github.ref_name }}
+          path: |
+            build/bdg4-01.stl
+
+      - name: Generate Changelog Since Last Tag
+        if: github.ref_type == 'tag'
+        run: |
+          echo "" > RELEASE_BODY.md
+          echo "## What's Changed" >> RELEASE_BODY.md
+          echo "" >> RELEASE_BODY.md
+          git log -n 10 --pretty=format:"- %s" >> RELEASE_BODY.md
+          echo "" >> RELEASE_BODY.md
+          echo "---" >> RELEASE_BODY.md
+          echo "" >> RELEASE_BODY.md
+          echo "### 📦 Release Contents" >> RELEASE_BODY.md
+          echo "" >> RELEASE_BODY.md
+          echo "| File Name                                                   | Description                                                                 |" >> RELEASE_BODY.md
+          echo "|-------------------------------------------------------------|-----------------------------------------------------------------------------|" >> RELEASE_BODY.md
+          echo "| \`bdg4-01.stl\`                                             | 🟢 BDG4-01(БДГ4-01) Enclosure STL file for 3D printing.                     |" >> RELEASE_BODY.md
+          echo "" >> RELEASE_BODY.md
+          echo "📁 **Location**: All files are available in the [Assets](#assets) section at the bottom of this release page." >> RELEASE_BODY.md
+          echo "" >> RELEASE_BODY.md
+          echo "---" >> RELEASE_BODY.md
+          echo "" >> RELEASE_BODY.md
+          echo "🔧 Thanks for supporting OpenGammaKit! If you find any issues or have suggestions, feel free to [open an issue](https://github.com/${{ github.repository }}/issues)." >> RELEASE_BODY.md
+
+      - name: Create GitHub Release
+        if: github.ref_type == 'tag'
+        uses: softprops/action-gh-release@v2
+        with:
+          name: OGK-3D-Models ${{ github.ref_name }}
+          tag_name: ${{ github.ref_name }}
+          body_path: RELEASE_BODY.md
+          files: |
+            build/bdg4-01.stl
+        env:
+          GITHUB_TOKEN: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
