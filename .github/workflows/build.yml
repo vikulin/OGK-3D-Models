@@ -18,17 +18,17 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Render STL in Docker
-        uses: vikulin/openscad-build-action@main
+        uses: vikulin/blender-action@v1
         with:
-          input-file: Enclosure/bdg4-01.scad
-          output-file: build/bdg4-01.stl
+          input-file: Enclosure/bdg4-01-230x48x2x8.blend
+          output-file: build/bdg4-01-230x48x2x8.stl
           
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: ogk-enclosure-${{ github.ref_name }}
           path: |
-            build/bdg4-01.stl
+            build/bdg4-01-230x48x2x8.stl
 
       - name: Generate Changelog Since Last Tag
         if: github.ref_type == 'tag'
@@ -44,7 +44,7 @@ jobs:
           echo "" >> RELEASE_BODY.md
           echo "| File Name                                                   | Description                                                                 |" >> RELEASE_BODY.md
           echo "|-------------------------------------------------------------|-----------------------------------------------------------------------------|" >> RELEASE_BODY.md
-          echo "| \`bdg4-01.stl\`                                             | 🟢 BDG4-01(БДГ4-01) Enclosure STL file for 3D printing.                     |" >> RELEASE_BODY.md
+          echo "| \`bdg4-01-230x48x2x8.stl\`                                  | 🟢 BDG4-01(БДГ4-01) Enclosure STL file for 3D printing.                     |" >> RELEASE_BODY.md
           echo "" >> RELEASE_BODY.md
           echo "📁 **Location**: All files are available in the [Assets](#assets) section at the bottom of this release page." >> RELEASE_BODY.md
           echo "" >> RELEASE_BODY.md
@@ -60,6 +60,6 @@ jobs:
           tag_name: ${{ github.ref_name }}
           body_path: RELEASE_BODY.md
           files: |
-            build/bdg4-01.stl
+            build/bdg4-01-230x48x2x8.stl
         env:
           GITHUB_TOKEN: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
