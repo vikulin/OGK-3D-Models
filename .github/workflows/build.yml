@@ -1,34 +1,34 @@
-name: Render STL files
+name: Render files
 
 on:
   push:
-    branches: [ "main" ]
-    paths: [ "Enclosure" ]
-
+    tags:
+      - '*'
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
   build:
-    
     runs-on: ubuntu-latest
-    
     steps:
-    
       - name: Checkout Repository
         uses: actions/checkout@v3
 
       - name: Render STL in Docker
-        uses: vikulin/blender-action@v1
+        uses: vikulin/blender-action@v2
         with:
-          input-file: Enclosure/bdg4-01-230x50x2x8.blend
-          output-file: build/bdg4-01-230x50x2x8.stl
-          
+          input_file: Enclosure/bdg4-01-230x50x2x8.blend
+          output_file: build/bdg4-01-230x50x2x8.stl
+          render_file: build/bdg4-01-230x50x2x8-#.png
+
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: ogk-enclosure-${{ github.ref_name }}
           path: |
-            build/bdg4-01-230x50x2x8.stl
+            build/*
 
       - name: Generate Changelog Since Last Tag
         if: github.ref_type == 'tag'
@@ -45,6 +45,7 @@ jobs:
           echo "| File Name                                                   | Description                                                                 |" >> RELEASE_BODY.md
           echo "|-------------------------------------------------------------|-----------------------------------------------------------------------------|" >> RELEASE_BODY.md
           echo "| \`bdg4-01-230x50x2x8.stl\`                                  | 🟢 BDG4-01(БДГ4-01) Enclosure STL file for 3D printing.                     |" >> RELEASE_BODY.md
+          echo "| \`bdg4-01-230x50x2x8-1.png\`                                | 🟢 Rendered preview frame from Blender (PNG format).                        |" >> RELEASE_BODY.md
           echo "" >> RELEASE_BODY.md
           echo "📁 **Location**: All files are available in the [Assets](#assets) section at the bottom of this release page." >> RELEASE_BODY.md
           echo "" >> RELEASE_BODY.md
@@ -61,5 +62,6 @@ jobs:
           body_path: RELEASE_BODY.md
           files: |
             build/bdg4-01-230x50x2x8.stl
+            build/bdg4-01-230x50x2x8-1.png
         env:
           GITHUB_TOKEN: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
