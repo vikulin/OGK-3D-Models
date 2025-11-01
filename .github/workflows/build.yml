@@ -45,7 +45,7 @@ jobs:
           echo "" >> RELEASE_BODY.md
           echo "| File Name                                                   | Description                                                                 |" >> RELEASE_BODY.md
           echo "|-------------------------------------------------------------|-----------------------------------------------------------------------------|" >> RELEASE_BODY.md
-          echo "| \`ogk-v0.1-177x44x3x8.stl\`                                  | 🟢 BDG4-01(БДГ4-01) Enclosure STL file for 3D printing.                     |" >> RELEASE_BODY.md
+          echo "| \`ogk-v0.1-177x44x3x8.stl\`                                  | 🟢 Enclosure STL file for 3D printing.                                      |" >> RELEASE_BODY.md
           echo "| \`ogk-v0.1-177x44x3x8-1.png\`                                | 🟢 Rendered preview frame from Blender (PNG format).                        |" >> RELEASE_BODY.md
           echo "" >> RELEASE_BODY.md
           echo "📁 **Location**: All files are available in the [Assets](#assets) section at the bottom of this release page." >> RELEASE_BODY.md
