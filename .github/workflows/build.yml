@@ -17,11 +17,11 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Render STL in Docker
-        uses: vikulin/blender-action@v5
+        uses: vikulin/blender-action@v6
         with:
           input_file: Enclosure/ogk-v0.1-177x44x3x8.blend
           output_file: build/ogk-v0.1-177x44x3x8.stl
-          render_file: build/ogk-v0.1-177x44x3x8-#.png
+          thumbnail_file: build/ogk-v0.1-177x44x3x8.png
           export_selected: true
 
       - name: Upload Artifacts
@@ -46,7 +46,7 @@ jobs:
           echo "| File Name                                                   | Description                                                                 |" >> RELEASE_BODY.md
           echo "|-------------------------------------------------------------|-----------------------------------------------------------------------------|" >> RELEASE_BODY.md
           echo "| \`ogk-v0.1-177x44x3x8.stl\`                                  | 🟢 Enclosure STL file for 3D printing.                                      |" >> RELEASE_BODY.md
-          echo "| \`ogk-v0.1-177x44x3x8-1.png\`                                | 🟢 Rendered preview frame from Blender (PNG format).                        |" >> RELEASE_BODY.md
+          echo "| \`ogk-v0.1-177x44x3x8.png\`                                  | 🟢 Preview image file for STL model.                                        |" >> RELEASE_BODY.md
           echo "" >> RELEASE_BODY.md
           echo "📁 **Location**: All files are available in the [Assets](#assets) section at the bottom of this release page." >> RELEASE_BODY.md
           echo "" >> RELEASE_BODY.md
@@ -63,6 +63,6 @@ jobs:
           body_path: RELEASE_BODY.md
           files: |
             build/ogk-v0.1-177x44x3x8.stl
-            build/ogk-v0.1-177x44x3x8-1.png
+            build/ogk-v0.1-177x44x3x8.png
         env:
           GITHUB_TOKEN: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
