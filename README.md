@@ -5,6 +5,6 @@ OpenGammaKit 3D models for printing and complete spectrometer assembly
 
 ## Preview
 
-<img src="https://github.com/vikulin/OGK-3D-Models/releases/latest/download/ogk-v0.1-177x44x3x8.png" width="500px" alt="OpenGammaKit Enclosure Preview" />
+<img src="https://github.com/vikulin/OGK-3D-Models/releases/latest/download/ogk-v0.1-166x45x3x8.png" width="500px" alt="OpenGammaKit Enclosure Preview" />
 
 ---
